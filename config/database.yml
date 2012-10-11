@@ -17,7 +17,7 @@ development:
   encoding: unicode
   database: unix_web_dev
   pool: 5
-  username: unix_web_dev
+  username: unix_web
   password: Password01
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -44,12 +44,12 @@ test:
   database: unix_web_test
   pool: 5
   username: unix_web
-  password:
+  password: Password01
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: unix_web_production
+  database: unix_web_prod
   pool: 5
   username: unix_web
-  password:
+  password: Password01
