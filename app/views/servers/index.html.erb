@@ -1,0 +1,26 @@
+<% provide(:title, 'All servers') %>
+<h1>All servers</h1>
+
+<% if current_user.admin? %>
+<%= button_to('Add Server', new_server_path, :class => "btn" )%>
+<% end %>
+
+<%= will_paginate %>
+
+<table class="table table-striped">
+  <tr>
+  	<th>Name</th>
+  	<th>Hosted on</th>
+  	<th>Site</th>
+  	<th>Environment</th>
+  	<th>Project</th>
+  	<th>Usage</th>
+  	<% if current_user.admin? %><th>Actions</th><% end %>
+  </tr>
+  <%= render @servers %>
+</table>
+
+<%= will_paginate %>
+
+
+

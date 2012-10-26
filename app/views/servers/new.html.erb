@@ -1,0 +1,23 @@
+<% provide(:title, 'Add Server') %>
+<%= javascript_tag "var project_lookup = #{ @project_lookup.to_json };" %>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $('#project_autocomplete').typeahead({source: project_lookup});
+    });
+</script>
+<h1>Add Server</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@server) do |f| %>
+      <%= render 'shared/server_error_messages' %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      
+      <%= f.text_field :project_id, placeholder: "Project", id: "project_autocomplete" %>
+
+
+      <%= f.submit "Add new server", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

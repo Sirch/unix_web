@@ -1,0 +1,23 @@
+<% provide(:title, 'All projects') %>
+<h1>All Projects</h1>
+<% if current_user.admin? %>
+<%= button_to('Add Project', new_project_path, :class => "btn" )%>
+<% end %>
+
+<%= will_paginate %>
+
+<table class="table table-striped">
+  <tr>
+  	<th>Project</th>
+  	<th>Comment</th>
+  	<% if current_user.admin? %><th>Actions</th><% end %>
+  </tr>
+  <%= render @projects %>
+</table>
+
+<%= will_paginate %>
+
+<br>
+<% if current_user.admin? %>
+<%= button_to('Add Project', new_project_path, :class => "btn" )%>
+<% end %>

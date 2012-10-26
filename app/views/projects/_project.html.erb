@@ -1,0 +1,8 @@
+<tr>
+	<td><%= link_to project.name, project %></td>
+	<td><%= project.comment %></td>
+  	<% if current_user.admin? %>
+  		<td><%= link_to "delete", project, method: :delete,
+                                  data: { confirm: "You sure?" } %></td>
+    <% end %>
+</tr>

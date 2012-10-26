@@ -1,0 +1,12 @@
+<tr>
+	<td><%= link_to server.name, server %></td>
+	<td><% if server.virtual %><%= server.parent.name %><% end %></td>
+	<td><%= server.datacenter.name %></td>
+  	<td><%= server.environment %></td>
+  	<td><%= server.project.name %></td>
+  	<td><%= server.usage %></td>
+  	<% if current_user.admin? %>
+  		<td><%= link_to "delete", server, method: :delete,
+                                  data: { confirm: "You sure?" } %></td>
+    <% end %>
+</tr>

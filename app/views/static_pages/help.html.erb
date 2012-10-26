@@ -3,25 +3,5 @@
 <h1>Help</h1>
 <p>Unix Web Help/Support</p>
 
-
-<script>
-    $(function() {
-        $( "#slider-range-min" ).slider({
-            range: "min",
-            value: 1,
-            min: 1,
-            max: 50000,
-            slide: function( event, ui ) {
-                $( "#amount1" ).val( "£" + ui.value );
-                $( "#amount2" ).val( "£" + (50000 - ui.value) );
-            }
-        });
-        $( "#amount1" ).val( "£" + $( "#slider-range-min" ).slider( "value" ) );
-        $( "#amount2" ).val( "£" + $( "#slider-range-min" ).slider( "value" ) );
-    });
-</script>
-<div id="slider-range-min" style="width: 200px;"></div>
-<label for="amount1">Number:<input type="text" id="amount1" style="border: 0; color: #f6931f; font-weight: bold;" /></label>
-<label for="amount2">Number:<input type="text" id="amount2" style="border: 0; color: #f6931f; font-weight: bold;" /></label>
-
+<div><%= render 'test' %></div>
 

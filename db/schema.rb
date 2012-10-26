@@ -11,7 +11,77 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018144822) do
+ActiveRecord::Schema.define(:version => 20121024134610) do
+
+  create_table "cpus", :force => true do |t|
+    t.string   "processor"
+    t.string   "model"
+    t.integer  "core_count"
+    t.integer  "base_speed_mhz"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "datacenters", :force => true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "postcode"
+    t.string   "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "operating_systems", :force => true do |t|
+    t.string   "name"
+    t.string   "version"
+    t.string   "release"
+    t.string   "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "comment"
+  end
+
+  create_table "server_models", :force => true do |t|
+    t.string   "name"
+    t.string   "manufacturer"
+    t.integer  "uheight"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "server_racks", :force => true do |t|
+    t.string   "name"
+    t.integer  "datacenter_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "servers", :force => true do |t|
+    t.string   "name"
+    t.boolean  "virtual"
+    t.integer  "parent_id"
+    t.integer  "datacenter_id"
+    t.string   "serial"
+    t.integer  "server_rack_id"
+    t.integer  "server_model_id"
+    t.integer  "operating_system_id"
+    t.integer  "cpu_number"
+    t.integer  "cpu_id"
+    t.integer  "ram"
+    t.string   "environment"
+    t.integer  "responsible_team_id"
+    t.integer  "project_id"
+    t.inet     "oob_address"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "usage"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
