@@ -21,6 +21,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  usage               :string(255)
+#  operating_system    :string(255)
 #
 
 class Server < ActiveRecord::Base
@@ -32,7 +33,7 @@ class Server < ActiveRecord::Base
     :server_model_id
     :name
     :oob_address
-    :operating_system_id
+    :operating_system
     :parent_id
     :project_id
     :server_rack_id
@@ -44,7 +45,6 @@ class Server < ActiveRecord::Base
   }
   
   
-  belongs_to :operating_system
   belongs_to :datacenter
   belongs_to :server_rack
   belongs_to :cpu
@@ -54,5 +54,14 @@ class Server < ActiveRecord::Base
   belongs_to :project
   
   validates :name,  presence: true, length: { maximum: 50 }
+  
+  
+  def self.operating_systems
+    Server.pluck(:operating_system).uniq
+  end
+  
+  def self.names
+    Server.pluck(:name)
+  end
 
 end

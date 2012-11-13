@@ -9,3 +9,5 @@ jQuery ->
     bProcessing: true
     bServerSide: true
     sAjaxSource: $('#servers').data('source')
+    
+project_lookup =  [ "one", "two", "three"]

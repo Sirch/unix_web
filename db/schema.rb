@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024134610) do
+ActiveRecord::Schema.define(:version => 20121113131950) do
 
   create_table "cpus", :force => true do |t|
     t.string   "processor"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20121024134610) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.string   "usage"
+    t.string   "operating_system"
   end
 
   create_table "users", :force => true do |t|

@@ -183,3 +183,15 @@ input, textarea, select, .uneditable-input {
     }
   }
 }
+
+table { 
+  border-spacing: 0px;
+  tr { }
+  th { font-size: 1.1em; }
+  td { 
+    font-size: 0.8em;
+    padding: 0px;
+    
+  }
+}
+

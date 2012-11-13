@@ -13,5 +13,5 @@
 
 class OperatingSystem < ActiveRecord::Base
   attr_accessible :comment, :name, :release, :version
-  has_many :server
+
 end

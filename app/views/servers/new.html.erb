@@ -1,22 +1,38 @@
 <% provide(:title, 'Add Server') %>
-<%= javascript_tag "var project_lookup = #{ @project_lookup.to_json };" %>
+<%= javascript_tag "var project_lookup = #{ Project.names };" %>
+<%= javascript_tag "var server_lookup = #{ @server_lookup };"%>
+<%= javascript_tag " var operating_system_lookup = #{ @operating_system_lookup ;}"%>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        $('#project_autocomplete').typeahead({source: project_lookup});
+        $('#project_typeahead').typeahead({source: project_lookup});
+        $('#server_typeahead').typeahead({source: server_lookup});
+        $('#operating_system_typeahead').typeahead({source: operating_system_lookup})
     });
 </script>
 <h1>Add Server</h1>
 
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@server) do |f| %>
+  <div class="span8 offset1">
+    <%= simple_form_for(@server, html: { class: "form-horizontal"}) do |f| %>
       <%= render 'shared/server_error_messages' %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+
+      <%= f.input :name %>
+      <%= f.input :parent, input_html: { id: "server_typeahead" } %>
+	  <%= f.input :project, input_html: { id: "project_typeahead" } %>
+	  <%= f.association :project, collection: Project.all(order: "name"), input_html: { class: "span3"} %>
+      <%= f.association :datacenter, input_html: { class: "span2" } %>
+      <%= f.input :serial %>
+      <%= f.input :server_rack %>  
+      <%= f.input :server_model %>
+      <%= f.input :operating_system, input_html: { id: "operating_system_typeahead" } %>
+      <%= f.input :cpu_number, as: :string %>
+      <%= f.input :cpu %>
+      <%= f.input :ram, as: :string %>
+      <%= f.input :environment %>
+      <%= f.input :oob_address, label: "Console Address", as: :string %>
       
-      <%= f.text_field :project_id, placeholder: "Project", id: "project_autocomplete" %>
-
-
+      
       <%= f.submit "Add new server", class: "btn btn-primary" %>
     <% end %>
   </div>

@@ -16,4 +16,9 @@ class Project < ActiveRecord::Base
   validates :name,  presence: true, 
                     length: { maximum: 50 }, 
                     uniqueness: { case_sensitive: false }
+                    
+  def self.names
+    Project.select(:name).map {|x| x.name }
+  end
+  
 end

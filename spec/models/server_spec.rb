@@ -21,6 +21,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  usage               :string(255)
+#  operating_system    :string(255)
 #
 
 require 'spec_helper'

@@ -1,7 +1,10 @@
-<tr>
+<tr<% if server.virtual %> 
+	class="info"
+	<% end %>>
 	<td><%= link_to server.name, server %></td>
 	<td><% if server.virtual %><%= server.parent.name %><% end %></td>
 	<td><%= server.datacenter.name %></td>
+	<td><%= server.server_rack.name %></td>
   	<td><%= server.environment %></td>
   	<td><%= server.project.name %></td>
   	<td><%= server.usage %></td>

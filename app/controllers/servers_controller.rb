@@ -1,7 +1,10 @@
 class ServersController < ApplicationController
   def new
+    @project_lookup=Project.names
+    @server_lookup=Server.names
+    @operating_system_lookup=Server.operating_systems
     @server=Server.new
-    @project_lookup=Project.select([:id,:name])
+    
   end
 
   def index
