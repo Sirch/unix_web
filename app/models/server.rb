@@ -83,7 +83,7 @@ class Server < ActiveRecord::Base
   
     if f=find( :all,
       conditions: [
-        'name=?',
+        'upper(name)=upper(?)',
         "#{search}"
       ]).first
       f.id

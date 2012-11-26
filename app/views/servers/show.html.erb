@@ -1,6 +1,6 @@
 <h1 style="text-align:left"><%= @server.name %></h1>
 
-Model: <%= @server.server_model.name %></br>
+Model: <%= link_to @server.server_model.name, controller: "server_models", action: "show", id: @server.server_model_id %></br>
 #CPUs: <%= @server.cpu_number %></br>
 CPU Type: <%= @server.cpu_type %></br>
 Serial: <%= @server.serial %></br>

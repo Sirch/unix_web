@@ -1,0 +1,13 @@
+<tr>
+	<td><%= link_to server_model.name, server_model %></td>
+	<td><%= server_model.server.count %></td>
+	<td><%= server_model.uheight %></td>
+	<td><%= server_model.power %></td>
+	<td><%= server_model.power_sockets %></td>
+	<td><%= server_model.heat_dissipation %></td>
+  	<% if current_user.admin? %>
+  		<td><%= link_to "Edit", action: :edit, id: server_model.id %> /
+  			<%= link_to "delete", server_model, method: :delete,
+                                  data: { confirm: "You sure?" } %></td>
+    <% end %>
+</tr>

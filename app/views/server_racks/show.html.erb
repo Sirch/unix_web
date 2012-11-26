@@ -7,6 +7,11 @@
 		<th>Physical</th>
 		<th>Children</th>
 		<th>Environment</th>
+		<th>Model</th>
+		<th>Height</th>
+		<th>Heat Dissipation(btu/hr)</th>
+		<th>Power(Watts)</th>
+		<th>Power sockets</th>
 	</tr>
 	<% @server_rack.server.sort_by(&:name).each do |server| %>
 		<% unless server.parent_id %>
@@ -18,6 +23,12 @@
 			<td>
 				<%= server.environment %>
 			</td>
+			<td><%= server.server_model.name %></td>
+			<td><%= server.server_model.uheight %></td>
+			<td><%= server.server_model.heat_dissipation %></td>
+			<td><%= server.server_model.power %></td>
+			<td><%= server.server_model.power_sockets %></td>
+			<td></td>
 		</tr>
 		<% end %>
 		<% if server.children? %><% server.child.each do |child| %>

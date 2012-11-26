@@ -15,7 +15,7 @@ class ServersController < ApplicationController
     #@server=Server.new(params[:server])
     @server=Server.new
     
-    rack_name             = params[:server][:server_rack]
+    rack_name             = params[:server][:server_rack].upcase
     parent                = params[:server][:parent]
     model                 = params[:server][:server_model]
     project               = params[:server][:project]
