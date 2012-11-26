@@ -14,4 +14,6 @@
 class Datacenter < ActiveRecord::Base
   attr_accessible :address, :comment, :name, :postcode
   has_many :server
+  has_many :server_rack
+  
 end

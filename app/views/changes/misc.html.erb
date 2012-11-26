@@ -1,0 +1,21 @@
+</br></br>
+<script type="text/javascript">
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+</script>
+
+<ul class="nav nav-tabs">
+  <li><a href="#new" data-toggle="tab">New</a></li>
+  <li><a href="#search" data-toggle="tab">Search</a></li>
+  <li><a href="#list" data-toggle="tab">List</a></li>
+  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="new"><%= render 'new' %></div>
+  <div class="tab-pane" id="search">Search</div>
+  <div class="tab-pane" id="list">List</div>
+  <div class="tab-pane" id="settings">Settings</div>
+</div>

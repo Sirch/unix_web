@@ -1,8 +1,17 @@
 UnixWeb::Application.routes.draw do
 
+  get "server_racks/new"
+
+  get "server_racks/index"
+
+  get "server_racks/show"
+
+  get "server_racks/edit"
+
   resources :users
   resources :projects
   resources :servers
+  resources :changes
   resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'static_pages#home'
@@ -17,6 +26,7 @@ UnixWeb::Application.routes.draw do
   
   match '/projects/new', to: 'projects#new'
   match '/servers/new', to: 'servers#new'
+  match '/changes/new', to: 'changes#new'
 
 
   # The priority is based upon order of creation:

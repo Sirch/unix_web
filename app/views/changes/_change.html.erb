@@ -1,0 +1,9 @@
+<tr>
+	<td><%= link_to change.subject, change %></td>
+	<td><% if change.user %><%= link_to change.user.name, change.user %><% end %></td>
+
+  	<% if signed_in? && current_user.admin? %>
+  		<td><%= link_to "delete", change, method: :delete,
+                                  data: { confirm: "You sure?" } %></td>
+    <% end %>
+</tr>

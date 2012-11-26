@@ -1,16 +1,20 @@
-<% provide(:title, 'Add Server') %>
-<%= javascript_tag "var project_lookup = #{ Project.names };" %>
-<%= javascript_tag "var server_lookup = #{ @server_lookup };"%>
-<%= javascript_tag " var operating_system_lookup = #{ @operating_system_lookup ;}"%>
+<%= javascript_tag "var server_lookup = #{@server_lookup}" %>
+<%= javascript_tag "var project_lookup = #{@project_lookup}" %>
+<%= javascript_tag "var operating_systems_lookup = #{@operating_system_lookup}" %>
+
 
 <script type="text/javascript">
-    jQuery(document).ready(function() {
-        $('#project_typeahead').typeahead({source: project_lookup});
-        $('#server_typeahead').typeahead({source: server_lookup});
-        $('#operating_system_typeahead').typeahead({source: operating_system_lookup})
+	    jQuery(document).ready(function() {
+        $('#server_typeahead').typeahead({source: server_lookup})
+        $('#project_typeahead').typeahead({source: project_lookup})
+        $('#operating_systems_typeahead').typeahead({source: operating_systems_lookup})
     });
 </script>
-<h1>Add Server</h1>
+
+<h1>New Server</h1>
+
+
+<% current_user.name %>
 
 <div class="row">
   <div class="span8 offset1">
@@ -20,16 +24,17 @@
       <%= f.input :name %>
       <%= f.input :parent, input_html: { id: "server_typeahead" } %>
 	  <%= f.input :project, input_html: { id: "project_typeahead" } %>
-	  <%= f.association :project, collection: Project.all(order: "name"), input_html: { class: "span3"} %>
+	<!--  <%= f.association :project, collection: Project.all(order: "name"), input_html: { class: "span3"} %> -->
       <%= f.association :datacenter, input_html: { class: "span2" } %>
       <%= f.input :serial %>
-      <%= f.input :server_rack %>  
-      <%= f.input :server_model %>
-      <%= f.input :operating_system, input_html: { id: "operating_system_typeahead" } %>
-      <%= f.input :cpu_number, as: :string %>
-      <%= f.input :cpu %>
-      <%= f.input :ram, as: :string %>
-      <%= f.input :environment %>
+      <%= f.input :server_rack, label: "Rack" %>  
+      <%= f.input :server_model, label: "Model" %>
+      <%= f.input :operating_system, input_html: { id: "operating_systems_typeahead" } %>
+      <%= f.input :cpu_number, label: "Number of CPUs", as: :string %>
+      <%= f.input :cpu, label: "CPU Type/Speed" %>
+      <%= f.input :ram, label: "Host Memory GB", as: :string %>
+      <%= f.input :environment, label: "Environment", placeholder: "Live, DR, etc" %>
+      <%= f.input :usage, label: "Usage", placeholder: "DB, Apps, whatever" %>
       <%= f.input :oob_address, label: "Console Address", as: :string %>
       
       

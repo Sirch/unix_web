@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113131950) do
+ActiveRecord::Schema.define(:version => 20121126161758) do
+
+  create_table "changes", :force => true do |t|
+    t.string   "added_by"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.text     "subject"
+  end
 
   create_table "cpus", :force => true do |t|
     t.string   "processor"
@@ -51,8 +60,11 @@ ActiveRecord::Schema.define(:version => 20121113131950) do
     t.string   "name"
     t.string   "manufacturer"
     t.integer  "uheight"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "power"
+    t.integer  "power_sockets"
+    t.integer  "heat_dissipation"
   end
 
   create_table "server_racks", :force => true do |t|
@@ -70,18 +82,20 @@ ActiveRecord::Schema.define(:version => 20121113131950) do
     t.string   "serial"
     t.integer  "server_rack_id"
     t.integer  "server_model_id"
-    t.integer  "operating_system_id"
     t.integer  "cpu_number"
     t.integer  "cpu_id"
     t.integer  "ram"
     t.string   "environment"
     t.integer  "responsible_team_id"
     t.integer  "project_id"
-    t.inet     "oob_address"
+    t.string   "oob_address"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.string   "usage"
     t.string   "operating_system"
+    t.integer  "added_by"
+    t.integer  "edited_by"
+    t.string   "cpu_type"
   end
 
   create_table "users", :force => true do |t|

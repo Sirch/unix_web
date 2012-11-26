@@ -1,2 +1,27 @@
-<h1>Project#show</h1>
-<p>Find me in app/views/project/show.html.erb</p>
+<h1 style="text-align:left"><%= @project.name %></h1>
+<h2 style="text-align:left"><%= @project.comment %></h2>
+<h3 style="text-align:left">Servers:</h2>
+
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Environment</th>
+		<th>Parent</th>
+	</tr>
+	<% @project.server.sort_by(&:name).each do |server| %>
+	<tr>
+		<td>
+			<%= link_to server.name, controller: "servers", action: "show", id: server.id %>
+		</td>
+		<td>
+			<%= server.environment %>
+		</td>
+		<td>
+			<% if server.parent_id %>
+				<%= link_to server.parent.name, controller: "servers", action: "show", id: server.parent_id %>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+
+</table>

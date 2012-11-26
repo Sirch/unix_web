@@ -1,12 +1,14 @@
-<tr<% if server.virtual %> 
+<tr<% if server.parent %> 
 	class="info"
 	<% end %>>
 	<td><%= link_to server.name, server %></td>
-	<td><% if server.virtual %><%= server.parent.name %><% end %></td>
+	<td><% if server.parent_id %>
+		<%= link_to server.parent.name, action: "show", id: server.parent_id %>
+		<% end %></td>
 	<td><%= server.datacenter.name %></td>
-	<td><%= server.server_rack.name %></td>
+	<td><%= link_to server.server_rack.name, controller: "server_racks", action: "show", id: server.server_rack_id %></td>
   	<td><%= server.environment %></td>
-  	<td><%= server.project.name %></td>
+  	<td><%= link_to server.project.name, controller: "projects", action: "show", id: server.project_id %></td>
   	<td><%= server.usage %></td>
   	<% if current_user.admin? %>
   		<td><%= link_to "delete", server, method: :delete,

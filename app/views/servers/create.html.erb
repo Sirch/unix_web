@@ -1,0 +1,24 @@
+<h1>Unable to save...</h1>
+
+Created by: <%= @server.creator.name %></br>
+Servername: <%= @server.name %></br>
+<% if @server.datacenter_id %>
+Datacenter: <%= @server.datacenter.name %></br>
+<% end %>
+Rack: <%= @server.server_rack.name %></br>
+Serial: <%= @server.serial %></br>
+<% if @server.parent_id %>
+Parent: <%= @server.parent.name %></br>
+<%end%>
+Model: <%= @server.server_model.name %></br>
+<% if @server.project_id %>
+Project: <%= @server.project.name %></br>
+<% end %>
+OS: <%= @server.operating_system %></br>
+<%if @server.cpu_number %>
+CPU: <%= @server.cpu_number %> x <%= @server.cpu_type %></br>
+<% end %>
+<% if @server.ram %>
+Memory: <%= @server.ram %> GB</br>
+<% end %>
+Console: <%= @server.oob_address %></br>

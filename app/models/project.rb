@@ -21,4 +21,14 @@ class Project < ActiveRecord::Base
     Project.select(:name).map {|x| x.name }
   end
   
+  def self.get_id(search)
+    if f=find( :all,
+      conditions: [
+        'upper(name) = upper(?)',
+        "#{search}"
+      ]).first
+      f.id
+    end
+  end
+  
 end

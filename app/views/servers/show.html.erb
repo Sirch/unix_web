@@ -1,2 +1,21 @@
-<h1>Servers#show</h1>
-<p>Find me in app/views/servers/show.html.erb</p>
+<h1 style="text-align:left"><%= @server.name %></h1>
+
+Model: <%= @server.server_model.name %></br>
+#CPUs: <%= @server.cpu_number %></br>
+CPU Type: <%= @server.cpu_type %></br>
+Serial: <%= @server.serial %></br>
+Datacenter: <%= @server.datacenter.name %></br>
+Rack: <%= link_to @server.server_rack.name, controller: "server_racks", action: "show", id: @server.server_rack_id %></br>
+Console: <%= @server.oob_address %></br></br>
+
+<% if @server.parent_id %>
+	Child of <%= link_to @server.parent.name, action: "show", id: @server.parent_id %></br></br>
+<% end %>
+
+<% if @server.children? %>
+Children:</br>
+	<% @server.child.sort_by(&:name).each do |child| %>
+		<%= link_to child.name, action: "show", id: child.id %></br>
+	<% end %>
+<% end %>
+

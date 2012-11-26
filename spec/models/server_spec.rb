@@ -10,18 +10,20 @@
 #  serial              :string(255)
 #  server_rack_id      :integer
 #  server_model_id     :integer
-#  operating_system_id :integer
 #  cpu_number          :integer
 #  cpu_id              :integer
 #  ram                 :integer
 #  environment         :string(255)
 #  responsible_team_id :integer
 #  project_id          :integer
-#  oob_address         :inet
+#  oob_address         :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  usage               :string(255)
 #  operating_system    :string(255)
+#  added_by            :integer
+#  edited_by           :integer
+#  cpu_type            :string(255)
 #
 
 require 'spec_helper'

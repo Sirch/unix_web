@@ -1,0 +1,31 @@
+<% provide(:title, 'Changes') %>
+<h1>Changes</h1>
+
+<% if not signed_in? %>
+Sign in to add new changes.</br></br>
+<% end %>
+
+<% if signed_in? %>
+<%= button_to('New Change', new_change_path, :class => "btn" )%>
+<% end %>
+
+
+<%= simple_form_for :change, method: 'get', html: { class: 'form-search' } do |f| %>
+	<%= f.input_field :search, placeholder: "Search", class: "input-medium search-query" %>
+	<%= f.submit "Find!", class: "btn" %>
+<% end %>
+
+<%= will_paginate %>
+
+<table class="table table-striped">
+  <tr>
+  	<th>Subject</th>
+  	<th>Added by</th>
+  	<% if signed_in? %>
+  	<% if current_user.admin? %><th>Actions</th><% end %><% end %>
+  </tr>
+  <%= render @changes %>
+</table>
+
+<%= will_paginate %>
+

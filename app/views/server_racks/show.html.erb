@@ -1,0 +1,38 @@
+<h1 style="text-align:left"><%= @server_rack.name %></h1>
+<h2 style="text-align:left"><%= @server_rack.datacenter.name %></h2>
+<h3 style="text-align:left">Servers:</h2>
+
+<table class="table">
+	<tr>
+		<th>Physical</th>
+		<th>Children</th>
+		<th>Environment</th>
+	</tr>
+	<% @server_rack.server.sort_by(&:name).each do |server| %>
+		<% unless server.parent_id %>
+		<tr>
+			<td>
+				<%= link_to server.name, controller: "servers", action: "show", id: server.id %>
+			</td>
+			<td></td>
+			<td>
+				<%= server.environment %>
+			</td>
+		</tr>
+		<% end %>
+		<% if server.children? %><% server.child.each do |child| %>
+		<tr>
+			<td></td>
+			<td>			
+				<%= link_to child.name, controller: "servers", action: "show", id: child.id %>
+			</td>
+			<td>
+				<%= server.environment %>
+			</td>
+		</tr>
+		<% end %>
+	<% end %>
+
+	<% end %>
+
+</table>

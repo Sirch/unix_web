@@ -13,4 +13,14 @@
 class ServerModel < ActiveRecord::Base
   attr_accessible :manufacturer, :name, :uheight
   has_many :server
+  
+  def self.get_id(search)
+    if f=find( :all,
+      conditions: [
+        'upper(name) = upper(?)',
+        "#{search}"
+      ]).first
+      f.id
+    end
+  end
 end

@@ -1,5 +1,6 @@
 <tr>
 	<td><%= link_to project.name, project %></td>
+	<td><%= project.server.count %>
 	<td><%= project.comment %></td>
   	<% if current_user.admin? %>
   		<td><%= link_to "delete", project, method: :delete,

@@ -13,7 +13,11 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation
+  attr_accessible :email, :name, :password, :password_confirmation, :edited_servers, :added_servers
+  has_many :change
+  has_many :created_servers, class_name: "Server", foreign_key: "added_by"
+  has_many :edited_servers, class_name: "Server", foreign_key: "edited_by"
+
   has_secure_password
   
   before_save { |user| user.email = email.downcase }
@@ -26,6 +30,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+ 
   
   private
   
