@@ -2,26 +2,29 @@
 <h2 style="text-align:left"><%= @project.comment %></h2>
 <h3 style="text-align:left">Servers:</h2>
 
-<table class="table">
+<table id="table_no_paginate" class="table table-hover">
+	<thead>
 	<tr>
 		<th>Name</th>
-		<th>Environment</th>
 		<th>Parent</th>
-	</tr>
+		<th>Environment</th>
+		<th>Usage</th>
+	</tr></thead>
+	<tbody>
 	<% @project.server.sort_by(&:name).each do |server| %>
 	<tr>
 		<td>
 			<%= link_to server.name, controller: "servers", action: "show", id: server.id %>
 		</td>
-		<td>
-			<%= server.environment %>
-		</td>
+
 		<td>
 			<% if server.parent_id %>
 				<%= link_to server.parent.name, controller: "servers", action: "show", id: server.parent_id %>
 			<% end %>
 		</td>
+		<td><%= server.environment %></td>
+		<td><%= server.usage %></td>
 	</tr>
 	<% end %>
-
+	</tbody>
 </table>

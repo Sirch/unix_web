@@ -7,7 +7,9 @@ Serial: <%= @server.serial %></br>
 Datacenter: <%= @server.datacenter.name %></br>
 Rack: <%= link_to @server.server_rack.name, controller: "server_racks", action: "show", id: @server.server_rack_id %></br>
 Console: <%= @server.oob_address %></br></br>
-
+Environment: <%= @server.environment %></br>
+Project: <%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></br>
+Usage: <%= @server.usage %></br></br>
 <% if @server.parent_id %>
 	Child of <%= link_to @server.parent.name, action: "show", id: @server.parent_id %></br></br>
 <% end %>
@@ -18,4 +20,21 @@ Children:</br>
 		<%= link_to child.name, action: "show", id: child.id %></br>
 	<% end %>
 <% end %>
+</br></br>
+<div class="row">
+	<div class="span6 offset3">
+		<table class="table table-bordered">
+			<tr>
+				<td>Last Updated:</td>
+				<td><% if @server.editor  %><%= @server.editor.name %><% end %></td>
+				<td><%= @server.updated_at %></td>
+			</tr>
+			<tr>
+				<td>Created:</td>
+				<td><%= @server.creator.name %></td>
+				<td><%= @server.created_at %></td>
+			</tr>
+		</table>
+	</div>
+</div>
 

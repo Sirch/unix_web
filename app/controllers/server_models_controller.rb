@@ -1,4 +1,5 @@
 class ServerModelsController < ApplicationController
+  
   def new
   end
 

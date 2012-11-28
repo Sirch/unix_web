@@ -8,7 +8,7 @@ class ServersController < ApplicationController
   end
 
   def index
-    @servers = Server.paginate(page: params[:page], order: "name ASC")
+    @servers = Server.all
   end
   
   def create
@@ -83,5 +83,9 @@ class ServersController < ApplicationController
   end
 
   def edit
+    @project_lookup=Project.names
+    @server_lookup=Server.names
+    @operating_system_lookup=Server.operating_systems
+    @server = Server.find(params[:id])
   end
 end

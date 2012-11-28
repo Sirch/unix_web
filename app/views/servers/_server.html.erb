@@ -1,6 +1,4 @@
-<tr<% if server.parent %> 
-	class="info"
-	<% end %>>
+<tr>
 	<td><%= link_to server.name, server %></td>
 	<td><% if server.parent_id %>
 		<%= link_to server.parent.name, action: "show", id: server.parent_id %>
@@ -10,8 +8,9 @@
   	<td><%= server.environment %></td>
   	<td><%= link_to server.project.name, controller: "projects", action: "show", id: server.project_id %></td>
   	<td><%= server.usage %></td>
-  	<% if current_user.admin? %>
-  		<td><%= link_to "delete", server, method: :delete,
+  	<% if signed_in? && current_user.admin? %>
+  		<td><%= link_to "Edit", action: :edit, id: server.id %> /
+  			<%= link_to "delete", server, method: :delete,
                                   data: { confirm: "You sure?" } %></td>
     <% end %>
 </tr>

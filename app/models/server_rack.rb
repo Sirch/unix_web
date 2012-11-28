@@ -12,6 +12,7 @@
 class ServerRack < ActiveRecord::Base
   attr_accessible :datacenter_id, :name
   has_many :server
+  has_many :server_model, through: :server
   belongs_to :datacenter
   
   def self.get_id(datacenter_id, search)

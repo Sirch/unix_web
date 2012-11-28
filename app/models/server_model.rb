@@ -16,6 +16,7 @@
 class ServerModel < ActiveRecord::Base
   attr_accessible :manufacturer, :name, :uheight, :power, :power_sockets, :heat_dissipation
   has_many :server
+  has_many :server_rack, through: :server
   
   def self.get_id(search)
     if f=find( :all,
@@ -24,6 +25,14 @@ class ServerModel < ActiveRecord::Base
         "#{search}"
       ]).first
       f.id
+    end
+  end
+  
+  def servers?
+    if self.server.count > 0
+      true
+    else
+      false
     end
   end
 end

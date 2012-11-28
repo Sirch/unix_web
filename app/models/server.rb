@@ -65,7 +65,8 @@ class Server < ActiveRecord::Base
   belongs_to :creator, class_name: "User", foreign_key: "added_by"
   belongs_to :editor, class_name: "User", foreign_key: "edited_by"
   
-  validates :name,  presence: true, uniqueness: true, length: { maximum: 50 }
+  validates :name,  presence: true, length: { maximum: 50 }
+  validates_uniqueness_of :name, case_sensitive: false
   validates :datacenter_id, presence: true
   validates :server_rack_id, presence: true
   validates :project_id, presence: true

@@ -1,0 +1,15 @@
+<% if server_rack.datacenter %>
+<tr>
+	<td><%= link_to server_rack.name, server_rack %></td>
+	<td><%= server_rack.datacenter.name %></td>
+	<td><%= server_rack.server.count %>
+	<td><%= server_rack.server_model.sum(:uheight) %></td>
+	<td><%= server_rack.server_model.sum(:power) %></td>
+	<td><%= server_rack.server_model.sum(:power_sockets) %></td>
+	<td><%= server_rack.server_model.sum(:heat_dissipation) %></td>
+  	<% if signed_in? && current_user.admin? %>
+  		<td><%= link_to "delete", server_rack, method: :delete,
+                                  data: { confirm: "You sure?" } %></td>
+    <% end %>
+</tr>
+<% end %>

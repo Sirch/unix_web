@@ -3,6 +3,7 @@ class ServerRacksController < ApplicationController
   end
 
   def index
+    @server_racks = ServerRack.paginate(page: params[:page], order: "name ASC")
   end
 
   def show

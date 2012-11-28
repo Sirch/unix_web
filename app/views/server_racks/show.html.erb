@@ -3,9 +3,11 @@
 <h3 style="text-align:left">Servers:</h2>
 
 <table class="table">
+	<thead>
 	<tr>
 		<th>Physical</th>
 		<th>Children</th>
+		<th>Virtuals</th>
 		<th>Environment</th>
 		<th>Model</th>
 		<th>Height</th>
@@ -13,37 +15,62 @@
 		<th>Power(Watts)</th>
 		<th>Power sockets</th>
 	</tr>
+	</thead>
+	<tbody>
 	<% @server_rack.server.sort_by(&:name).each do |server| %>
-		<% unless server.parent_id %>
-		<tr>
-			<td>
-				<%= link_to server.name, controller: "servers", action: "show", id: server.id %>
-			</td>
-			<td></td>
-			<td>
-				<%= server.environment %>
-			</td>
-			<td><%= server.server_model.name %></td>
-			<td><%= server.server_model.uheight %></td>
-			<td><%= server.server_model.heat_dissipation %></td>
-			<td><%= server.server_model.power %></td>
-			<td><%= server.server_model.power_sockets %></td>
-			<td></td>
-		</tr>
+		<% unless server.parent_id %> <%# unless this server is a child %>
+			<tr>
+				<td><%= link_to server.name, controller: "servers", action: "show", id: server.id %></td>
+				<td></td>
+				<td></td>
+				<td><%= server.environment %></td>
+				<td><%= server.server_model.name %></td>
+				<td><%= server.server_model.uheight %></td>
+				<td><%= server.server_model.heat_dissipation %></td>
+				<td><%= server.server_model.power %></td>
+				<td><%= server.server_model.power_sockets %></td>
+				<td></td>
+			</tr>
 		<% end %>
-		<% if server.children? %><% server.child.each do |child| %>
-		<tr>
-			<td></td>
-			<td>			
-				<%= link_to child.name, controller: "servers", action: "show", id: child.id %>
-			</td>
-			<td>
-				<%= server.environment %>
-			</td>
-		</tr>
-		<% end %>
-	<% end %>
+		<% if server.children? %>
+			<% server.child.sort_by(&:name).each do |child| %>
+			<% if not child.parent.parent_id %><%# If this child is not a grandchild, ie parents dont have a parent %>
+				<tr>
+					<td></td>
+					<td><%= link_to child.name, controller: "servers", action: "show", id: child.id %></td>
+					<td></td>
+					<td><%= child.environment %></td>
+					<% if child.server_model_id %>
+						<td><%= child.server_model.name %></td>
+						<td></td>
+						<td><%= child.server_model.heat_dissipation %></td>
+						<td><%= child.server_model.power %></td>
+					<% end %>
+				</tr>
+				<% if child.children? %>
+					<% child.child.each do |virtual| %>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><%= link_to virtual.name, controller: "servers", action: "show", id: virtual.id %></td>
+						</tr>
+					<% end %>
+				<% end %>
+			<% end %>
+			<% end %>
 
+		<% end %>
 	<% end %>
+	<tr class="info">
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><strong>Total</strong></td>
+		<td><strong><%= @server_rack.server_model.sum(:uheight) %></strong></td>
+		<td><strong><%= @server_rack.server_model.sum(:heat_dissipation) %></strong></td>
+		<td><strong><%= @server_rack.server_model.sum(:power) %></strong></td>
+		<td><strong><%= @server_rack.server_model.sum(:power_sockets) %></strong></td>
+	</tr>
+	</tbody>
 
 </table>

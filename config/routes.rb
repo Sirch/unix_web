@@ -11,6 +11,7 @@ UnixWeb::Application.routes.draw do
   resources :users
   resources :projects
   resources :server_models
+  resources :server_racks
   resources :servers
   resources :changes
   resources :sessions, only: [:new, :create, :destroy]

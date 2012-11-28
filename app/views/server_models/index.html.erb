@@ -1,7 +1,7 @@
-<% provide(:title, 'All Models') %>
-<h1>All Models</h1>
-<% if current_user.admin? %>
-<%= button_to('Add Model', new_server_model_path, :class => "btn" )%>
+<% provide(:title, 'Model Index') %>
+<h1>System Models</h1>
+<% if signed_in? && current_user.admin? %>
+<%#= button_to('Add Model', new_server_model_path, :class => "btn" )%>
 <% end %>
 
 <%= will_paginate %>
@@ -14,7 +14,7 @@
   	<th>Power</th>
   	<th>Power Socket</th>
   	<th>Heat Dissipation BTU/hr</th>
-  	<% if current_user.admin? %><th>Actions</th><% end %>
+  	<% if signed_in? && current_user.admin? %><th>Actions</th><% end %>
   </tr>
   <%= render @server_models %>
 </table>
@@ -22,6 +22,4 @@
 <%= will_paginate %>
 
 <br>
-<% if current_user.admin? %>
-<%= button_to('Add Model', new_project_path, :class => "btn" )%>
-<% end %>
+

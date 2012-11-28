@@ -3,11 +3,23 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('#servers').dataTable
-    sPaginationType: "full_numbers"
-    bJQueryUI: true
-    bProcessing: true
-    bServerSide: true
-    sAjaxSource: $('#servers').data('source')
+  $('#server_table').dataTable
+    bFilter:        true
+    bSort:          true
+    bPaginate:      true
+    iDisplayLength: 20
+    bLengthChange:  false
+    bInfo:          true
+  $('#table_no_paginate').dataTable
+    bFilter:        true
+    bSort:          true
+    bPaginate:      false
+    bInfo:          false
+  $('#rack_table').dataTable
+    bSort:          true
+    bFilter:        false
+    bPaginate:      false
+    bInfo:          false
+
     
-project_lookup =  [ "one", "two", "three"]
+

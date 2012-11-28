@@ -1,2 +1,39 @@
-<h1>Servers#edit</h1>
-<p>Find me in app/views/servers/edit.html.erb</p>
+<%= javascript_tag "var server_lookup = #{@server_lookup}" %>
+<%= javascript_tag "var project_lookup = #{@project_lookup}" %>
+<%= javascript_tag "var operating_systems_lookup = #{@operating_system_lookup}" %>
+
+<script type="text/javascript">
+	    jQuery(document).ready(function() {
+        $('#server_typeahead').typeahead({source: server_lookup})
+        $('#project_typeahead').typeahead({source: project_lookup})
+        $('#operating_systems_typeahead').typeahead({source: operating_systems_lookup})
+    });
+</script>
+
+<% provide(:title, 'Edit Server') %>
+
+<div class="row">
+  <div class="span6 offset1">
+    <%= simple_form_for(@server, html: { class: "form-horizontal"}) do |f| %>
+     <%= render 'shared/server_error_messages' %>
+     <%= f.input :name %>
+     <% if @server.parent %>
+     	<%= f.input :parent, input_html: { id: "server_typeahead", value: @server.parent.name, autocomplete: "off" } %>
+     <% else %>
+     	<%= f.input :parent, input_html: { id: "server_typeahead" } %>
+     <% end %>
+     <%= f.input :parent, label_method: :name, value_method: :id, input_html: { id: "server_typeahead" } %>
+	 <%= f.input :project, text_method: :name, input_html: { id: "project_typeahead", autocomplete: "off" } %>
+     <%= f.input :serial %>
+     <%= f.input :server_model, value_method: :name, label: "Model" %>
+     <%= f.input :operating_system, input_html: { id: "operating_systems_typeahead", autocomplete: "off" } %>
+     <%= f.input :cpu_number, label: "Number of CPUs", as: :string %>
+     <%= f.input :cpu, label: "CPU Type/Speed" %>
+     <%= f.input :ram, label: "Host Memory GB", as: :string %>
+     <%= f.input :environment, label: "Environment", placeholder: "Live, DR, etc" %>
+     <%= f.input :usage, label: "Usage", placeholder: "DB, Apps, whatever" %>
+     <%= f.input :oob_address, label: "Console Address", as: :string %>
+     <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

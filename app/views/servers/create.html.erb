@@ -1,5 +1,7 @@
 <h1>Unable to save...</h1>
 
+<%= render 'shared/server_error_messages' %>
+
 Created by: <%= @server.creator.name %></br>
 Servername: <%= @server.name %></br>
 <% if @server.datacenter_id %>

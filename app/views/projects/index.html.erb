@@ -1,6 +1,6 @@
 <% provide(:title, 'All projects') %>
 <h1>All Projects</h1>
-<% if current_user.admin? %>
+<% if signed_in? && current_user.admin? %>
 <%= button_to('Add Project', new_project_path, :class => "btn" )%>
 <% end %>
 
@@ -11,7 +11,7 @@
   	<th>Project</th>
   	<th>#Servers</th>
   	<th>Comment</th>
-  	<% if current_user.admin? %><th>Actions</th><% end %>
+  	<% if signed_in? && current_user.admin? %><th>Actions</th><% end %>
   </tr>
   <%= render @projects %>
 </table>
@@ -19,6 +19,6 @@
 <%= will_paginate %>
 
 <br>
-<% if current_user.admin? %>
+<% if signed_in? && current_user.admin? %>
 <%= button_to('Add Project', new_project_path, :class => "btn" )%>
 <% end %>
