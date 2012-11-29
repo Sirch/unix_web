@@ -1,5 +1,4 @@
 <%= javascript_tag "var server_lookup = #{@server_lookup}" %>
-<%= javascript_tag "var project_lookup = #{@project_lookup}" %>
 <%= javascript_tag "var operating_systems_lookup = #{@operating_system_lookup}" %>
 
 <script type="text/javascript">
@@ -22,13 +21,19 @@
      <% else %>
      	<%= f.input :parent, input_html: { id: "server_typeahead" } %>
      <% end %>
-     <%= f.input :parent, label_method: :name, value_method: :id, input_html: { id: "server_typeahead" } %>
-	 <%= f.input :project, text_method: :name, input_html: { id: "project_typeahead", autocomplete: "off" } %>
+     <%#= f.name :parent, collection: Server.all, label_method: :name, value_method: :id, input_html: { id: "server_typeahead" } %>
+	 <%= f.association :project, collection: Project.all(order: "name"), label_method: :name, text_method: :id %>
      <%= f.input :serial %>
-     <%= f.input :server_model, value_method: :name, label: "Model" %>
+     <%#= f.input :server_model, value_method: :name, label: "Model" %>
+     <% if @server.server_model_id %>
+     	<%= f.input :server_model, label: "Model", input_html: { value: @server.server_model.name} %>
+     <% else %>
+     	<%= f.input :server_model, label: "Model" %>
+     <% end %>
+     
      <%= f.input :operating_system, input_html: { id: "operating_systems_typeahead", autocomplete: "off" } %>
      <%= f.input :cpu_number, label: "Number of CPUs", as: :string %>
-     <%= f.input :cpu, label: "CPU Type/Speed" %>
+     <%= f.input :cpu_type, label: "CPU Type/Speed" %>
      <%= f.input :ram, label: "Host Memory GB", as: :string %>
      <%= f.input :environment, label: "Environment", placeholder: "Live, DR, etc" %>
      <%= f.input :usage, label: "Usage", placeholder: "DB, Apps, whatever" %>

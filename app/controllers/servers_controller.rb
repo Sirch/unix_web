@@ -1,4 +1,9 @@
 class ServersController < ApplicationController
+  
+  before_filter :signed_in_user,  only: [:new, :create, :destroy]
+  before_filter :admin_user,      only: [:edit, :update, :destroy]
+
+  
   def new
     @project_lookup=Project.names
     @server_lookup=Server.names
@@ -67,10 +72,9 @@ class ServersController < ApplicationController
     if signed_in?
       @server.added_by=current_user.id
     end
-    
-   
-    
+           
     if @server.save
+      flash[:success] = "#{@server.name} added."
       index
     render 'index'
     #else
@@ -83,9 +87,68 @@ class ServersController < ApplicationController
   end
 
   def edit
-    @project_lookup=Project.names
     @server_lookup=Server.names
     @operating_system_lookup=Server.operating_systems
     @server = Server.find(params[:id])
   end
+  
+  def update
+    @server = Server.find(params[:id])
+    
+    parent                = params[:server][:parent]
+    model                 = params[:server][:server_model]
+    @server.project_id    = params[:server][:project_id]
+    @server.name          = params[:server][:name]
+    @server.serial        = params[:server][:serial]
+    @server.operating_system = params[:server][:operating_system]
+    @server.cpu_number    = params[:server][:cpu_number]
+    @server.cpu_type      = params[:server][:cpu_type]
+    @server.ram           = params[:server][:ram]
+    @server.environment   = params[:server][:environment]
+    @server.usage         = params[:server][:usage]
+    @server.oob_address   = params[:server][:oob_address]
+    
+    # If this server has a parent, find the ID
+    if parent != ''
+      @server.parent_id = Server.get_id(parent)
+      @server.server_rack_id  = @server.parent.server_rack.id
+      @server.datacenter_id   = @server.parent.datacenter.id
+    end
+    
+    
+    # Get the ID of the model, and create if it doesnt exist.
+    if m=ServerModel.get_id(model)
+      @server.server_model_id = m
+    else
+      server_model = ServerModel.new
+      server_model.name = model
+      server_model.save
+      @server.server_model_id = server_model.id     
+    end
+    
+    if signed_in?
+      @server.edited_by=current_user.id
+    end
+    
+    
+    if @server.save
+      flash[:success] = "#{@server.name} edited."
+      redirect_to server_url
+    end
+  end
+  
+    private
+    
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
+
+    def admin_user
+      unless (signed_in? && current_user.admin?)
+               redirect_to(root_path)
+      end
+    end
 end

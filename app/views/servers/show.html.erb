@@ -1,15 +1,74 @@
 <h1 style="text-align:left"><%= @server.name %></h1>
 
-Model: <%= link_to @server.server_model.name, controller: "server_models", action: "show", id: @server.server_model_id %></br>
-#CPUs: <%= @server.cpu_number %></br>
-CPU Type: <%= @server.cpu_type %></br>
-Serial: <%= @server.serial %></br>
-Datacenter: <%= @server.datacenter.name %></br>
-Rack: <%= link_to @server.server_rack.name, controller: "server_racks", action: "show", id: @server.server_rack_id %></br>
-Console: <%= @server.oob_address %></br></br>
-Environment: <%= @server.environment %></br>
-Project: <%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></br>
-Usage: <%= @server.usage %></br></br>
+<div class="row">
+	<div class="span12">
+		<div class="span3">
+			<h3><%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></h3>
+		</div>
+		<div class="span1">
+			<h3><%= @server.environment %></h3>
+		</div>
+		<div class="span6">
+			<h3><%= @server.usage %></h3></br>
+		</div>
+		<div class="row">
+			<div class="span7">
+				<table style="font-size:1.4em" class="table">
+					<tr>
+						<td>Model:</td>
+						<td>
+							<%= link_to @server.server_model.name, 
+							controller: "server_models", 
+							action: "show", 
+							id: @server.server_model_id %>
+						</td>
+					</tr>
+					<tr>
+						<td>Serial:</td>
+						<td><%= @server.serial %></td>
+					</tr>
+					<tr>
+						<td>OS:</td>
+						<td><%= @server.operating_system %></td>
+					</tr>
+					<tr>
+						<td>#cpus:</td>
+						<td><%= @server.cpu_number %></td>
+					</tr>
+					<tr>
+						<td>cpu type:</td>
+						<td><%= @server.cpu_type %></td>
+					</tr>
+					
+				</table>	
+			</div>
+			<div class="span5">
+				<table style="font-size:1.4em" class="table">
+					<tr>
+						<td>Datacenter:</td>
+						<td><%= @server.datacenter.name %></td>
+					</tr>
+					<tr>
+						<td>Rack:</td>
+						<td><%= link_to @server.server_rack.name, 
+								controller: "server_racks", 
+								action: "show", 
+								id: @server.server_rack_id %></td>
+					</tr>
+					<tr>
+						<td>
+							Console:
+						</td>
+						<td>
+							<%= @server.oob_address %>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
 <% if @server.parent_id %>
 	Child of <%= link_to @server.parent.name, action: "show", id: @server.parent_id %></br></br>
 <% end %>
@@ -20,7 +79,9 @@ Children:</br>
 		<%= link_to child.name, action: "show", id: child.id %></br>
 	<% end %>
 <% end %>
+
 </br></br>
+
 <div class="row">
 	<div class="span6 offset3">
 		<table class="table table-bordered">

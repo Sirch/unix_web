@@ -7,7 +7,7 @@ jQuery ->
     bFilter:        true
     bSort:          true
     bPaginate:      true
-    iDisplayLength: 20
+    iDisplayLength: 100
     bLengthChange:  false
     bInfo:          true
   $('#table_no_paginate').dataTable
