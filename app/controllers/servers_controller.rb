@@ -1,6 +1,6 @@
 class ServersController < ApplicationController
   
-  before_filter :signed_in_user,  only: [:new, :create, :destroy]
+  before_filter :signed_in_user,  only: [:new, :clone, :create, :destroy]
   before_filter :admin_user,      only: [:edit, :update, :destroy]
 
   
@@ -22,7 +22,7 @@ class ServersController < ApplicationController
     
     rack_name             = params[:server][:server_rack].upcase
     parent                = params[:server][:parent]
-    model                 = params[:server][:server_model]
+    model                 = (params[:server][:server_model]).strip
     project               = params[:server][:project]
     @server.name          = params[:server][:name]
     @server.datacenter_id = params[:server][:datacenter_id]
@@ -75,8 +75,7 @@ class ServersController < ApplicationController
            
     if @server.save
       flash[:success] = "#{@server.name} added."
-      index
-    render 'index'
+      redirect_to @server
     #else
     #  render 'new'
     end
@@ -96,7 +95,7 @@ class ServersController < ApplicationController
     @server = Server.find(params[:id])
     
     parent                = params[:server][:parent]
-    model                 = params[:server][:server_model]
+    model                 = (params[:server][:server_model]).strip
     @server.project_id    = params[:server][:project_id]
     @server.name          = params[:server][:name]
     @server.serial        = params[:server][:serial]
@@ -136,6 +135,14 @@ class ServersController < ApplicationController
       redirect_to server_url
     end
   end
+  
+  def clone
+    @server_lookup=Server.names
+    @operating_system_lookup=Server.operating_systems
+    @server = Server.find(params[:id]).dup
+    @server.rackname=@server.server_rack.name
+  end
+
   
     private
     

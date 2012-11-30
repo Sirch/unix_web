@@ -15,11 +15,7 @@ jQuery ->
     bSort:          true
     bPaginate:      false
     bInfo:          false
-  $('#rack_table').dataTable
-    bSort:          true
-    bFilter:        false
-    bPaginate:      false
-    bInfo:          false
+
 
     
 

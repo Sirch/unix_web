@@ -1,92 +1,118 @@
-<h1 style="text-align:left"><%= @server.name %></h1>
-
 <div class="row">
-	<div class="span12">
-		<div class="span3">
-			<h3><%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></h3>
-		</div>
-		<div class="span1">
-			<h3><%= @server.environment %></h3>
-		</div>
-		<div class="span6">
-			<h3><%= @server.usage %></h3></br>
-		</div>
-		<div class="row">
-			<div class="span7">
-				<table style="font-size:1.4em" class="table">
-					<tr>
-						<td>Model:</td>
-						<td>
-							<%= link_to @server.server_model.name, 
-							controller: "server_models", 
-							action: "show", 
-							id: @server.server_model_id %>
-						</td>
-					</tr>
-					<tr>
-						<td>Serial:</td>
-						<td><%= @server.serial %></td>
-					</tr>
-					<tr>
-						<td>OS:</td>
-						<td><%= @server.operating_system %></td>
-					</tr>
-					<tr>
-						<td>#cpus:</td>
-						<td><%= @server.cpu_number %></td>
-					</tr>
-					<tr>
-						<td>cpu type:</td>
-						<td><%= @server.cpu_type %></td>
-					</tr>
+	<div class="span6">
+		<h1 style="text-align:left"><%= @server.name %></h1>
+	</div>
+	<div style="text-align:right" class="span6">
+		<% if signed_in? %>
+		<h4>New Server</h4>
+		<h4><%= link_to "Edit", action: :edit %></h4>
+		<h4>Relocate</h4>
+		<h4>Clone</h4>
+		<% end %>
+	</div>
+
+</div>
+<div class="row">
+	<div class="span3">
+		<h3><%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></h3>
+	</div>
+	<div class="span1">
+		<h3><%= @server.environment %></h3>
+	</div>
+	<div class="span7">
+		<h3><%= @server.usage %></h3>
+	</div>
+</div>
+	
+<div class="row">
+	<div class="span7">
+		<table style="font-size:1.4em" class="table">
+			<tr>
+				<td>Model:</td>
+				<td>
+					<%= link_to @server.server_model.name, 
+						controller: "server_models", 
+						action: "show", 
+						id: @server.server_model_id %>
+				</td>
+			</tr>
+			<tr>
+				<td>Serial:</td>
+				<td><%= @server.serial %></td>
+			</tr>
+			<tr>
+				<td>OS:</td>
+				<td><%= @server.operating_system %></td>
+			</tr>
+			<tr>
+				<td>#cpus:</td>
+				<td><%= @server.cpu_number %></td>
+			</tr>
+			<tr>
+				<td>cpu type:</td>
+				<td><%= @server.cpu_type %></td>
+			</tr>
 					
-				</table>	
-			</div>
-			<div class="span5">
-				<table style="font-size:1.4em" class="table">
-					<tr>
-						<td>Datacenter:</td>
-						<td><%= @server.datacenter.name %></td>
-					</tr>
-					<tr>
-						<td>Rack:</td>
-						<td><%= link_to @server.server_rack.name, 
-								controller: "server_racks", 
-								action: "show", 
-								id: @server.server_rack_id %></td>
-					</tr>
-					<tr>
-						<td>
-							Console:
-						</td>
-						<td>
-							<%= @server.oob_address %>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
+		</table>	
+	</div>
+	<div class="span5">
+		<table style="font-size:1.4em" class="table">
+			<tr>
+				<td>Datacenter:</td>
+				<td><%= @server.datacenter.name %></td>
+			</tr>
+			<tr>
+				<td>Rack:</td>
+				<td>
+					<%= link_to @server.server_rack.name, 
+						controller: "server_racks", 
+						action: "show", 
+						id: @server.server_rack_id %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Console:
+				</td>
+				<td>
+					<%= @server.oob_address %>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 
-<% if @server.parent_id %>
-	Child of <%= link_to @server.parent.name, action: "show", id: @server.parent_id %></br></br>
-<% end %>
+<div class="row">
+	<div class="span6">
+		<% if @server.parent_id %>
+			Child of <%= link_to @server.parent.name, action: "show", id: @server.parent_id %></br></br>
+		<% end %>
 
-<% if @server.children? %>
-Children:</br>
-	<% @server.child.sort_by(&:name).each do |child| %>
-		<%= link_to child.name, action: "show", id: child.id %></br>
-	<% end %>
-<% end %>
+		<% if @server.children? %>
+			<strong><%= pluralize(@server.child.count,'Child') %>:</strong></br>
+			<table class="table">
+				<% @server.child.sort_by(&:name).each do |child| %>
+				<tr>
+					<td><%= link_to child.name, action: "show", id: child.id %></td>
+					<td><%= link_to child.project.name, controller: "projects", action: "show", id: child.project_id %></td>
+					<td><%= child.usage %></td>
+				</tr>
+				<% end %>
+			</table>
+		<% end %>
+	</div>
+</div>
 
-</br></br>
+<%
+# Boilerplate
+%>
+
 
 <div class="row">
 	<div class="span6 offset3">
 		<table class="table table-bordered">
 			<tr>
-				<td>Last Updated:</td>
+				<td>Modified:</td>
 				<td><% if @server.editor  %><%= @server.editor.name %><% end %></td>
 				<td><%= @server.updated_at %></td>
 			</tr>

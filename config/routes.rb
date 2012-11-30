@@ -29,6 +29,8 @@ UnixWeb::Application.routes.draw do
   match '/projects/new', to: 'projects#new'
   match '/servers/new', to: 'servers#new'
   match '/changes/new', to: 'changes#new'
+  
+  match '/servers/:id/clone', to: 'servers#clone'
 
 
   # The priority is based upon order of creation:
@@ -86,5 +88,5 @@ UnixWeb::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  # match ':controller(/:action(/:id))(.:format)'s
 end

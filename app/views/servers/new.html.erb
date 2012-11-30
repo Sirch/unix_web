@@ -1,41 +1,6 @@
-<%= javascript_tag "var server_lookup = #{@server_lookup}" %>
-<%= javascript_tag "var project_lookup = #{@project_lookup}" %>
-<%= javascript_tag "var operating_systems_lookup = #{@operating_system_lookup}" %>
-
-
-<script type="text/javascript">
-	    jQuery(document).ready(function() {
-        $('#server_typeahead').typeahead({source: server_lookup})
-        $('#project_typeahead').typeahead({source: project_lookup})
-        $('#operating_systems_typeahead').typeahead({source: operating_systems_lookup})
-    });
-</script>
-
+<% provide(:title, 'New Server') %>
 <h1>New Server</h1>
 
+<%= render 'shared/add_server_form' %>
 
-<% current_user.name %>
 
-<div class="row">
-  <div class="span8 offset1">
-    <%= simple_form_for(@server, html: { class: "form-horizontal"}) do |f| %>
-      <%= render 'shared/server_error_messages' %>
-
-      <%= f.input :name %>
-      <%= f.input :parent, input_html: { id: "server_typeahead", autocomplete: "off" } %>
-	  <%= f.input :project, input_html: { id: "project_typeahead", autocomplete: "off" } %>
-      <%= f.association :datacenter, collection: Datacenter.all(order: 'name'), input_html: { class: "span2" } %>
-      <%= f.input :server_rack, label: "Rack" %> 
-      <%= f.input :serial %> 
-      <%= f.input :server_model, label: "Model" %>
-      <%= f.input :environment, label: "Environment", placeholder: "Live, DR, etc" %>
-      <%= f.input :usage, label: "Usage", placeholder: "DB, Apps, whatever" %>
-      <%= f.input :operating_system, input_html: { id: "operating_systems_typeahead", autocomplete: "off" } %>
-      <%= f.input :cpu_number, label: "Number of CPUs", as: :string %>
-      <%= f.input :cpu, label: "CPU Type/Speed" %>
-      <%= f.input :ram, label: "Host Memory GB", as: :string %>
-      <%= f.input :oob_address, label: "Console Address", as: :string %>
-      <%= f.submit "Add new server", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>

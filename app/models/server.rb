@@ -41,14 +41,14 @@ class Server < ActiveRecord::Base
     :parent_id,
     :project,
     :project_id,
-    :server_model,
+    :model,
     :server_model_id,
-    :server_rack,
+    :rackname,
     :server_rack_id,
     :ram,
     :responsible_team_id,
     :serial,
-    :serverusage_id,
+    :usage,
     :virtual,
     :added_by,
     :edited_by
@@ -77,7 +77,7 @@ class Server < ActiveRecord::Base
   end
   
   def self.names
-    Server.pluck(:name)
+    Server.pluck(:name).sort
   end
   
   def self.get_id(search)
