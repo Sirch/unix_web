@@ -6,17 +6,21 @@
 
 <%= will_paginate %>
 
-<table class="table table-striped">
-  <tr>
-  	<th>Model</th>
-  	<th>#Servers</th>
-  	<th>Height (U)</th>
-  	<th>Power</th>
-  	<th>Power Socket</th>
-  	<th>Heat Dissipation BTU/hr</th>
-  	<% if signed_in? && current_user.admin? %><th>Actions</th><% end %>
-  </tr>
-  <%= render @server_models %>
+<table id="server_model_table" class="table table-striped">
+	<thead>
+  		<tr>
+  			<th>Model</th>
+  			<th>#Servers</th>
+  			<th>Height (U)</th>
+  			<th>Power</th>
+  			<th>Power Socket</th>
+  			<th>Heat Dissipation BTU/hr</th>
+  			<% if signed_in? && current_user.admin? %><th>Actions</th><% end %>
+ 	 	</tr>
+ 	 </thead>
+ 	 <tbody>
+ 	 	<%= render @server_models %>
+ 	 </tbody>
 </table>
 
 <%= will_paginate %>

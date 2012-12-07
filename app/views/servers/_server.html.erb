@@ -1,7 +1,10 @@
 <tr>
 	<td><%= link_to server.name, server %></td>
 	<td><% if server.parent_id %>
-		<%= link_to server.parent.name, action: "show", id: server.parent_id %>
+			<%= link_to server.parent.name, action: "show", id: server.parent_id %>
+		<% end %>
+		<% if server.child.count > 0 %>
+			(<%= server.child.count %>)
 		<% end %></td>
 	<td><%= server.datacenter.name %></td>
 	<td><%= link_to server.server_rack.name, controller: "server_racks", action: "show", id: server.server_rack_id %></td>
@@ -9,8 +12,8 @@
   	<td><%= link_to server.project.name, controller: "projects", action: "show", id: server.project_id %></td>
   	<td><%= server.usage %></td>
   	<% if signed_in? && current_user.admin? %>
-  		<td><%= link_to "Edit", action: :edit, id: server.id %> /
-  			<%= link_to "delete", server, method: :delete,
+  		<td><%= link_to "Edit", action: :edit, id: server.id %> |
+  			<%= link_to "Delete", server, method: :delete,
                                   data: { confirm: "You sure?" } %></td>
     <% end %>
 </tr>

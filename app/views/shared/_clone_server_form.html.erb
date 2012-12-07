@@ -15,26 +15,27 @@
   <div class="span8 offset1">
     <%= simple_form_for(@server, html: { class: "form-horizontal"}) do |f| %>
       <%= render 'shared/server_error_messages' %>
+      <%= f.submit "Clone #{@server.name}", class: "btn btn-primary" %>
 
-      <%= f.input :name %>
+      <%= f.input :name, input_html: { value: "" } %>
       <% if @server.parent %>
      	<%= f.input :parent, input_html: { id: "server_typeahead", value: @server.parent.name, autocomplete: "off" } %>
       <% else %>
      	<%= f.input :parent, input_html: { id: "server_typeahead" } %>
       <% end %>
-	  <%= f.input :project, input_html: { id: "project_typeahead", autocomplete: "off" } %>
+	  <%= f.input :project_name, input_html: { id: "project_typeahead", autocomplete: "off" } %>
       <%= f.association :datacenter, collection: Datacenter.all(order: 'name'), input_html: { class: "span2" } %>
-      <%= f.input :rackname, label: "Rack" %> 
-      <%= f.input :serial %> 
-      <%= f.input :server_model, label: "Model" %>
+      <%= f.input :server_rack_name, label: "Rack" %> 
+      <%= f.input :serial, input_html: { value: "" } %> 
+      <%= f.input :server_model_name, label: "Model" %>
       <%= f.input :environment, label: "Environment", placeholder: "Live, DR, etc" %>
       <%= f.input :usage, label: "Usage", placeholder: "DB, Apps, whatever" %>
       <%= f.input :operating_system, input_html: { id: "operating_systems_typeahead", autocomplete: "off" } %>
       <%= f.input :cpu_number, label: "Number of CPUs", as: :string %>
-      <%= f.input :cpu, label: "CPU Type/Speed" %>
+      <%= f.input :cpu_type, label: "CPU Type/Speed" %>
       <%= f.input :ram, label: "Host Memory GB", as: :string %>
-      <%= f.input :oob_address, label: "Console Address", as: :string %>
-      <%= f.submit "Add new server", class: "btn btn-primary" %>
+      <%= f.input :oob_address, label: "Console Address", as: :string, input_html: { value: "" } %>
+      <%= f.submit "Clone #{@server.name}", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

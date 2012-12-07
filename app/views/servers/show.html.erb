@@ -4,14 +4,14 @@
 	</div>
 	<div style="text-align:right" class="span6">
 		<% if signed_in? %>
-		<h4>New Server</h4>
+		<h4><%= link_to "New Server", action: :new %></h4>
 		<h4><%= link_to "Edit", action: :edit %></h4>
 		<h4>Relocate</h4>
-		<h4>Clone</h4>
+		<h4><%= link_to "Clone", action: :clone %></h4>
 		<% end %>
 	</div>
-
 </div>
+
 <div class="row">
 	<div class="span3">
 		<h3><%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></h3>
@@ -51,6 +51,10 @@
 			<tr>
 				<td>cpu type:</td>
 				<td><%= @server.cpu_type %></td>
+			</tr>
+			<tr>
+				<td>Host Memory GB:</td>
+				<td><%= @server.ram %></td>
 			</tr>
 					
 		</table>	

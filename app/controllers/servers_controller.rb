@@ -13,29 +13,40 @@ class ServersController < ApplicationController
   end
 
   def index
-    @servers = Server.all
+    # Middleware want to show based on the servername 
+    #   ie /servers?show=ap101
+    # So index unless this parameter is sent
+    unless (params[:show]) 
+      @servers = Server.all
+    else 
+      if @server = Server.where(name: params[:show]).first
+        redirect_to @server
+      else
+        render "static_pages/not_found"
+      end
+    end
   end
   
   def create
     #@server=Server.new(params[:server])
     @server=Server.new
     
-    rack_name             = params[:server][:server_rack].upcase
-    parent                = params[:server][:parent]
-    model                 = (params[:server][:server_model]).strip
-    project               = params[:server][:project]
-    @server.name          = params[:server][:name]
+    rack_name             = params[:server][:server_rack_name].strip.upcase
+    parent                = params[:server][:parent].strip
+    model                 = (params[:server][:server_model_name]).strip
+    project               = params[:server][:project_name].strip
+    @server.name          = params[:server][:name].strip
     @server.datacenter_id = params[:server][:datacenter_id]
-    @server.serial        = params[:server][:serial]
-    @server.operating_system = params[:server][:operating_system]
+    @server.serial        = params[:server][:serial].strip
+    @server.operating_system = params[:server][:operating_system].strip
     @server.cpu_number    = params[:server][:cpu_number]
-    @server.cpu_type      = params[:server][:cpu]
+    @server.cpu_type      = params[:server][:cpu_type].strip
     @server.ram           = params[:server][:ram]
-    @server.environment   = params[:server][:environment]
-    @server.usage         = params[:server][:usage]
-    @server.oob_address   = params[:server][:oob_address]
+    @server.environment   = params[:server][:environment].strip
+    @server.usage         = params[:server][:usage].strip
+    @server.oob_address   = params[:server][:oob_address].strip
     
-    # If this server has a parent, find the ID
+    # If this server has been given a parent, find the parent_id
     if parent != ''
       @server.parent_id = Server.get_id(parent)
       @server.server_rack_id  = @server.parent.server_rack.id
@@ -94,18 +105,18 @@ class ServersController < ApplicationController
   def update
     @server = Server.find(params[:id])
     
-    parent                = params[:server][:parent]
+    parent                = params[:server][:parent].strip
     model                 = (params[:server][:server_model]).strip
     @server.project_id    = params[:server][:project_id]
-    @server.name          = params[:server][:name]
-    @server.serial        = params[:server][:serial]
-    @server.operating_system = params[:server][:operating_system]
+    @server.name          = params[:server][:name].strip
+    @server.serial        = params[:server][:serial].strip
+    @server.operating_system = params[:server][:operating_system].strip
     @server.cpu_number    = params[:server][:cpu_number]
-    @server.cpu_type      = params[:server][:cpu_type]
+    @server.cpu_type      = params[:server][:cpu_type].strip
     @server.ram           = params[:server][:ram]
-    @server.environment   = params[:server][:environment]
-    @server.usage         = params[:server][:usage]
-    @server.oob_address   = params[:server][:oob_address]
+    @server.environment   = params[:server][:environment].strip
+    @server.usage         = params[:server][:usage].strip
+    @server.oob_address   = params[:server][:oob_address].strip
     
     # If this server has a parent, find the ID
     if parent != ''
@@ -137,10 +148,19 @@ class ServersController < ApplicationController
   end
   
   def clone
+    @project_lookup=Project.names
     @server_lookup=Server.names
     @operating_system_lookup=Server.operating_systems
+
     @server = Server.find(params[:id]).dup
-    @server.rackname=@server.server_rack.name
+    @server.server_rack_name = @server.server_rack.name
+    @server.server_model_name = @server.server_model.name
+    @server.project_name = @server.project.name
+  end
+  
+  def destroy
+    flash[:error] = "Im not sure we should delete servers"
+    render "shared/nope"
   end
 
   

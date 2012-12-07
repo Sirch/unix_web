@@ -26,9 +26,16 @@ class ServerModelsController < ApplicationController
   end
   
   def destroy
-    ServerModel.find(params[:id]).destroy
-    flash[:success] = "Model destroyed."
-    redirect_to server_models_url
+    @server_model = ServerModel.find(params[:id])
+    unless @server_model.server.count == 0
+      flash[:error] = "Model in use."
+      render "shared/nope"
+    else
+      @server_model.destroy
+      flash[:success] = "Model destroyed."
+      redirect_to server_models_url
+    end
+    
   end
   
     private

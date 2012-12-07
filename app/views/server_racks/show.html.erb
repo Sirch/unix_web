@@ -48,11 +48,13 @@
 					<% end %>
 				</tr>
 				<% if child.children? %>
-					<% child.child.each do |virtual| %>
+					<% child.child.sort_by(&:name).each do |virtual| %>
 						<tr>
 							<td></td>
 							<td></td>
 							<td><%= link_to virtual.name, controller: "servers", action: "show", id: virtual.id %></td>
+							<td><%= virtual.environment %></td>
+							<td><%= virtual.server_model.name %></td>
 						</tr>
 					<% end %>
 				<% end %>

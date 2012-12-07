@@ -3,7 +3,7 @@
 <% provide(:title, 'All servers') %>
 <h1>All servers</h1>
 
-<% if signed_in? && current_user.admin? %>
+<% if signed_in? %>
 <%= button_to('Add Server', new_server_path, :class => "btn" )%>
 <% end %>
 

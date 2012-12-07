@@ -13,5 +13,4 @@
 
 class Cpu < ActiveRecord::Base
   attr_accessible :base_speed_mhz, :core_count, :model, :processor
-  has_many :server
 end

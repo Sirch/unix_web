@@ -27,23 +27,23 @@
 #
 
 class Server < ActiveRecord::Base
+  
+  attr_accessor :parent_name, :server_rack_name, :server_model_name, :project_name
+  
   attr_accessible(
-    :cpu,
-    :cpu_id,
     :cpu_number,
+    :cpu_type,
     :datacenter_id,
     :environment,
-    :environment_id,
     :name,
     :oob_address,
     :operating_system,
-    :parent,
+    :parent_name,
     :parent_id,
-    :project,
     :project_id,
-    :model,
+    :server_model_name,
     :server_model_id,
-    :rackname,
+    :server_rack_name,
     :server_rack_id,
     :ram,
     :responsible_team_id,
@@ -57,9 +57,8 @@ class Server < ActiveRecord::Base
   
   belongs_to :datacenter
   belongs_to :server_rack
-  belongs_to :cpu
-  has_many :child, :class_name => "Server", :foreign_key => "parent_id"
-  belongs_to :parent, :class_name => "Server"
+  has_many :child, class_name: Server, foreign_key: "parent_id"
+  belongs_to :parent, class_name: Server
   belongs_to :server_model
   belongs_to :project
   belongs_to :creator, class_name: "User", foreign_key: "added_by"
@@ -70,7 +69,7 @@ class Server < ActiveRecord::Base
   validates :datacenter_id, presence: true
   validates :server_rack_id, presence: true
   validates :project_id, presence: true
-  
+ 
   
   def self.operating_systems
     Server.pluck(:operating_system).uniq
@@ -99,5 +98,6 @@ class Server < ActiveRecord::Base
       false
     end
   end
+  
 
 end
