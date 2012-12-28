@@ -13,6 +13,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'postgres_ext'
 gem 'jquery-datatables-rails'
 gem 'simple_form'
+gem 'spreadsheet'
 
 
 group :development, :test do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130143535) do
+ActiveRecord::Schema.define(:version => 20121227114027) do
 
   create_table "changes", :force => true do |t|
     t.string   "added_by"
@@ -89,13 +89,18 @@ ActiveRecord::Schema.define(:version => 20121130143535) do
     t.integer  "responsible_team_id"
     t.integer  "project_id"
     t.string   "oob_address"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "usage"
     t.string   "operating_system"
     t.integer  "added_by"
     t.integer  "edited_by"
     t.string   "cpu_type"
+    t.boolean  "decommissioned",      :default => false
+    t.date     "decommissioned_date"
+    t.string   "decommissioned_by"
+    t.boolean  "powered_off",         :default => false
+    t.date     "powered_off_date"
   end
 
   add_index "servers", ["name"], :name => "index_servers_on_name"

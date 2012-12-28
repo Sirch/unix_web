@@ -1,22 +1,47 @@
 <div class="row">
-	<div class="span6">
+	<div class="span8">
 		<h1 style="text-align:left"><%= @server.name %></h1>
+			<% if @server.decommissioned %>
+				</br><h1>DECOMMISSIONED</h1>
+			<% end %>
+			<% if @server.powered_off %>
+				</br>POWERED OFF
+				</br><%= @server.powered_off_date %>
+			<% end %>
+		
 	</div>
-	<div style="text-align:right" class="span6">
+	<div style="text-align:left" class="span2">
 		<% if signed_in? %>
-		<h4><%= link_to "New Server", action: :new %></h4>
-		<h4><%= link_to "Edit", action: :edit %></h4>
-		<h4>Relocate</h4>
-		<h4><%= link_to "Clone", action: :clone %></h4>
+			<% if current_user.admin? %>
+				<h5><%= link_to "Edit", action: :edit %></h5>
+				<% unless @server.powered_off? %>
+					<h5><%= link_to "Power off", action: :power_off %></h4>
+				<% else %>
+					<h5><%= link_to "Power on", action: :power_on %></h4>
+        	    <% end %>
+        	    <h5>Relocate</h5>
+        	    <% unless @server.decommissioned? %>
+        	    	<h5><%= link_to "Decommission", action: :decommission %></h5>
+        	    <% end %>
+			<% end %>
+		<% end %>
+    </div>
+		
+	<div style="text-align:right" class="span2">
+		<% if signed_in? %>
+			<h5><%= link_to "New Server", action: :new %></h5>
+			<h5><%= link_to "Clone", action: :clone %></h5>
 		<% end %>
 	</div>
 </div>
 
 <div class="row">
-	<div class="span3">
+	<div class="span2">
 		<h3><%= link_to @server.project.name, controller: "projects", action: "show", id: @server.project_id %></h3>
 	</div>
-	<div class="span1">
+</div>
+<div class="row">
+	<div class="span4">
 		<h3><%= @server.environment %></h3>
 	</div>
 	<div class="span7">
@@ -95,7 +120,7 @@
 		<% if @server.children? %>
 			<strong><%= pluralize(@server.child.count,'Child') %>:</strong></br>
 			<table class="table">
-				<% @server.child.sort_by(&:name).each do |child| %>
+				<% @server.child.where(decommissioned: false).sort_by(&:name).each do |child| %>
 				<tr>
 					<td><%= link_to child.name, action: "show", id: child.id %></td>
 					<td><%= link_to child.project.name, controller: "projects", action: "show", id: child.project_id %></td>

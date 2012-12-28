@@ -1,7 +1,8 @@
 class ServersController < ApplicationController
   
   before_filter :signed_in_user,  only: [:new, :clone, :create, :destroy]
-  before_filter :admin_user,      only: [:edit, :update, :destroy]
+  before_filter :admin_user,      only: [:edit, :update, :destroy, :power_off, :power_on ]
+    
 
   
   def new
@@ -17,7 +18,7 @@ class ServersController < ApplicationController
     #   ie /servers?show=ap101
     # So index unless this parameter is sent
     unless (params[:show]) 
-      @servers = Server.all
+      @servers = Server.where(decommissioned: false)
     else 
       if @server = Server.where(name: params[:show]).first
         redirect_to @server
@@ -162,9 +163,36 @@ class ServersController < ApplicationController
     flash[:error] = "Im not sure we should delete servers"
     render "shared/nope"
   end
+  
+  def power_off
+    @server = Server.find(params[:id])
+    @server.powered_off = true
+    @server.powered_off_date = Date.today
+    @server.edited_by=current_user.id
+    @server.save
+    redirect_to @server    
+  end
+  
+  def power_on
+    @server = Server.find(params[:id])
+    @server.powered_off = false
+    @server.powered_off_date = nil
+    @server.edited_by=current_user.id
+    @server.save
+    redirect_to @server
+  end
+  
+  def decommission
+    @server = Server.find(params[:id])
+    @server.decommissioned = true
+    @server.decommissioned_date = Date.today
+    @server.decommissioned_by = current_user.id
+    @server.edited_by=current_user.id
+  end
 
   
     private
+    
     
     def signed_in_user
       unless signed_in?

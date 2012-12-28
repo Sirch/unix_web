@@ -14,6 +14,7 @@ UnixWeb::Application.routes.draw do
   resources :server_racks
   resources :servers
   resources :changes
+  resources :reports
   resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'static_pages#home'
@@ -31,6 +32,10 @@ UnixWeb::Application.routes.draw do
   match '/changes/new', to: 'changes#new'
   
   match '/servers/:id/clone', to: 'servers#clone'
+  match '/servers/:id/power_off', to: 'servers#power_off'
+  match '/servers/:id/power_on', to: 'servers#power_on'
+  match '/servers/:id/decommission', to: 'servers#decommission'
+
 
 
   # The priority is based upon order of creation:

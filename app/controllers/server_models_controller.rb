@@ -15,7 +15,7 @@ class ServerModelsController < ApplicationController
   end
   
   def index
-    @server_models = ServerModel.paginate(page: params[:page], order: "name ASC")
+    @server_models = ServerModel.all(order: "name ASC")
   end
   
   def update

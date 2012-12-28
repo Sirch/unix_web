@@ -76,7 +76,7 @@ class Server < ActiveRecord::Base
   end
   
   def self.names
-    Server.pluck(:name).sort
+    Server.where(decommissioned: false).pluck(:name).sort
   end
   
   def self.get_id(search)
@@ -89,6 +89,7 @@ class Server < ActiveRecord::Base
       f.id
     end
   end
+ 
   
   def children?
     
@@ -98,6 +99,7 @@ class Server < ActiveRecord::Base
       false
     end
   end
+  
   
 
 end
