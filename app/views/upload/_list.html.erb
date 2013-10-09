@@ -1,0 +1,44 @@
+<script type="text/javascript">	
+$(document).ready( function () {
+	$('#downloads').dataTable({
+		"aoColumns": [
+			{},
+			{ "bVisible": false},
+			{ "iDataSort": 1},
+			{}
+			],
+		"bFilter": false, 
+		"bSort":true, 
+		"bPaginate": false,
+		"bInfo": false
+		});
+	});
+</script>
+
+<p>&#x2665</p>
+
+<div>
+	<table id="downloads" class="pretty">
+		<thead>
+		<tr>
+			<th>Filename</th>
+			<th>num_size</th>
+			<th>Size</th>
+			<th>Action</th>
+		</tr>
+		</thead>
+		<tbody>
+		<% @files.each do | file | %>
+		<% full_file_name = "public/data/incoming/#{file}" %>
+		<% unless File.directory?"#{full_file_name}" %>
+		<tr>
+			<td><%= link_to file, :action => :download, :file_name => full_file_name %></td>
+			<td><%= File.size"#{full_file_name}" %>
+			<td nowrap><%= number_to_human_size(File.size"#{full_file_name}") %>
+			<td><%= link_to "Delete", { :action => "delete", :file => file }, :confirm => "Orly?", :method => :delete %>
+		</tr>
+		<% end %>
+		<% end %>
+		</tbody>
+	</table>
+</div>
