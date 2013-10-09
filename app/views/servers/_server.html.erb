@@ -1,5 +1,9 @@
+<%# Form used in server index form to print rows %>
 <tr>
 	<td><%= link_to server.name, server %></td>
+	<% if @show_decommissioned %>
+		<td><%= server.serial %></td>
+	<% end %>
 	<td><% if server.parent_id %>
 			<%= link_to server.parent.name, action: "show", id: server.parent_id %>
 		<% end %>

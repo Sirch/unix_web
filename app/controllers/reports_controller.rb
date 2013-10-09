@@ -18,13 +18,15 @@ class ReportsController < ApplicationController
       
       bold_heading = Spreadsheet::Format.new(:weight => :bold, :size => 10)
       
-      sun_sheet=book.create_worksheet
-      hp_sheet=book.create_worksheet
-      vm_sheet=book.create_worksheet
-      
+      sun_sheet =book.create_worksheet
+      hp_sheet  =book.create_worksheet
+      ucs_sheet =book.create_worksheet
+      vm_sheet  =book.create_worksheet
+     
       sun_sheet.name  = "Sun"
       hp_sheet.name   = "HP"
       vm_sheet.name   = "Virtual Servers"
+      ucs_sheet.name = "UCS-Blades"
              
              
       set_column(sun_sheet,0,10,  "Server")
@@ -62,11 +64,25 @@ class ReportsController < ApplicationController
       set_column(vm_sheet,6,15, "Project")
       set_column(vm_sheet,7,46, "Usage")
       
+      set_column(ucs_sheet,0,10, "Server")
+      set_column(ucs_sheet,1,13, "Serial")
+      set_column(ucs_sheet,2,13, "Enclosure")
+      set_column(ucs_sheet,3,9,  "Rack")
+      set_column(ucs_sheet,4,27,  "Model")
+      set_column(ucs_sheet,5,10,  "OS")
+      set_column(ucs_sheet,6,78,  "CPU")
+      set_column(ucs_sheet,7,9,   "RAM GB")
+      set_column(ucs_sheet,8,11,  "Site")
+      set_column(ucs_sheet,9,12,  "Environment")
+      set_column(ucs_sheet,10,46,  "Usage")
+      set_column(ucs_sheet,11,15, "Project") 
+      
 
       
       sun_sheet_row=1
       hp_sheet_row=1
       vm_sheet_row=1
+      ucs_sheet_row=1
       
       @servers=Server.all.sort_by(&:name)
       @servers.each do |s|
@@ -106,9 +122,31 @@ class ReportsController < ApplicationController
           
           hp_sheet_row = hp_sheet_row + 1
           
+         elsif s.server_model.manufacturer == "Cisco Systems Inc"
+          ucs_sheet[ucs_sheet_row,0]="#{s.name}"
+          ucs_sheet[ucs_sheet_row,1]="#{s.serial}"
+          if s.parent_id
+            ucs_sheet[ucs_sheet_row,2]="#{s.parent.name}" 
+          end
+          ucs_sheet[ucs_sheet_row,3]="#{s.server_rack.name}"
+          ucs_sheet[ucs_sheet_row,4]="#{s.server_model.name}"
+          ucs_sheet[ucs_sheet_row,5]="#{s.operating_system}"
+          if s.cpu_number && (s.cpu_number > 0)
+            ucs_sheet[ucs_sheet_row,6]="#{s.cpu_number} x #{s.cpu_type}"
+          end
+          ucs_sheet[ucs_sheet_row,7]="#{s.ram}"
+          ucs_sheet[ucs_sheet_row,8]="#{s.datacenter.name}"
+          ucs_sheet[ucs_sheet_row,9]="#{s.environment}"
+          ucs_sheet[ucs_sheet_row,10]="#{s.usage}"
+          ucs_sheet[ucs_sheet_row,11]="#{s.project.name}"
+          
+          ucs_sheet_row = ucs_sheet_row + 1
+          
         else
           vm_sheet[vm_sheet_row,0]="#{s.name}"
-          vm_sheet[vm_sheet_row,1]="#{s.parent.name}"
+          if s.parent_id
+            vm_sheet[vm_sheet_row,1]="#{s.parent.name}"
+          end
           if s.server_model_id
             vm_sheet[vm_sheet_row,2]="#{s.server_model.name}"
           end

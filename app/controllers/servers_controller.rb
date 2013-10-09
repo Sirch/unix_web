@@ -17,8 +17,16 @@ class ServersController < ApplicationController
     # Middleware want to show based on the servername 
     #   ie /servers?show=ap101
     # So index unless this parameter is sent
+
+      if params[:decommed] == "true"
+        @show_decommissioned = true
+      else
+        @show_decommissioned = false
+      end
+
+    
     unless (params[:show]) 
-      @servers = Server.where(decommissioned: false)
+      @servers = Server.where(decommissioned: @show_decommissioned)
     else 
       if @server = Server.where(name: params[:show]).first
         redirect_to @server

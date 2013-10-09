@@ -15,7 +15,9 @@
                 			<li><%= link_to "Servers", servers_path %></li>  
                 			<li><%= link_to "Projects", projects_path %></li>
                 			<li><%= link_to "Racks", server_racks_path %></li>  
-                			<li><%= link_to "Models", server_models_path %></li>      				
+                			<li><%= link_to "Models", server_models_path %></li> 
+                			<li class="divider"></li> 
+                			<li><%= link_to "Decommissioned", controller: "servers", action: "index", decommed: "true" %>    				
                 		</ul>                 				        
 					</li>
 					<li><%= link_to "Reports", reports_path %>

@@ -4,14 +4,40 @@
 	<fieldset>
 		<legend><%= @server.name %> decommissioning</legend>
 		<label>Carried out by:</label>
-		<input type="text" placeholder="Engineer's name">
+		<input type="text" placeholder="Engineer's name" value="engineer">
+		<label>Change Request Ref (if required):</label>
+		<input type="text" placeholder="CR Number" value="cr_number">
 		<label class="checkbox">
 			<input type="checkbox" value="em_notified">
-			Notified EM team to stop alerting
+			Notified EM team to stop alerting and recieved notification that monitoring has stopped.
 		</label>
 		<label class="checkbox">
-			<input type="checkbox" value="sth_else">
-			Something else
+			<input type="checkbox" value="apps_db_down">
+			All relevant applications and databases stopped?
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="backup">
+			Final backup taken, and server removed from backup schedule?
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="power_off">
+			System shut down and powered off?
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="networks">
+			Network team notified?
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="deracked">
+			Removed from rack?
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="support_cancelled">
+			Notify John Hewett of the server name and serial number for removal from support database.
+		</label>
+		<label class="checkbox">
+			<input type="checkbox" value="remove_hosts">
+			Remove from /etc/hosts on dv302.
 		</label>
 		
 	</fieldset>

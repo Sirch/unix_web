@@ -11,6 +11,9 @@
 <thead>
   <tr>
   	<th>Name</th>
+  	<% if @show_decommissioned %>
+  		<th>Serial</th>
+  	<% end %>
   	<th>Parent</th>
   	<th>Site</th>
   	<th>Rack</th>
