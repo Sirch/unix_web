@@ -22,3 +22,4 @@ doc/
 .idea
 /public/data/incoming
 public/files
+/app/passenger.*.lock

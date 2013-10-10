@@ -1,5 +1,7 @@
 UnixWeb::Application.routes.draw do
 
+  get "myip/index"
+
   get "server_racks/new"
   get "server_racks/index"
   get "server_racks/show"
